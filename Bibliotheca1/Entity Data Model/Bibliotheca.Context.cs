@@ -12,6 +12,8 @@ namespace Bibliotheca1.Entity_Data_Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class BibliothecaEntities : DbContext
     {
@@ -32,5 +34,28 @@ namespace Bibliotheca1.Entity_Data_Model
         public virtual DbSet<BookPublisher> BookPublishers { get; set; }
         public virtual DbSet<Genre> Genres { get; set; }
         public virtual DbSet<Publisher> Publishers { get; set; }
+    
+        public virtual ObjectResult<AuhtorSearch_Result> AuhtorSearch(string searchFileter)
+        {
+            var searchFileterParameter = searchFileter != null ?
+                new ObjectParameter("searchFileter", searchFileter) :
+                new ObjectParameter("searchFileter", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AuhtorSearch_Result>("AuhtorSearch", searchFileterParameter);
+        }
+    
+        public virtual ObjectResult<GenreSearch_Result> GenreSearch(string searchFileter)
+        {
+            var searchFileterParameter = searchFileter != null ?
+                new ObjectParameter("searchFileter", searchFileter) :
+                new ObjectParameter("searchFileter", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GenreSearch_Result>("GenreSearch", searchFileterParameter);
+        }
+    
+        public virtual ObjectResult<ProcSelectAllBook_Result> ProcSelectAllBook()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProcSelectAllBook_Result>("ProcSelectAllBook");
+        }
     }
 }

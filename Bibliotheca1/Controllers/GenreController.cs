@@ -37,10 +37,11 @@ namespace Bibliotheca1.Controllers
 
         [HttpGet]
         [Route("GetGenre")]
-        public List<Genre> GetGenre()
+        public ResponseObj GetGenre(string searchFilter)
         {
-            var result = genreRepository.getGenre();
-            return result;
+            var result = genreRepository.getGenre(searchFilter);
+            responseObj.data = result;
+            return responseObj;
         }
     }
 }

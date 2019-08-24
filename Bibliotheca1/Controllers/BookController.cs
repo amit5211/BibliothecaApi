@@ -34,5 +34,16 @@ namespace Bibliotheca1.Controllers
                 return responseObj;
             }
         }
+
+        [HttpGet]
+        [Route("GetBook")]
+        public ResponseObj GetBook()
+        {
+            var result = bookRepository.getBook();
+           
+            responseObj.data = result;
+            responseObj.response = "success";
+            return responseObj;
+        }
     }
 }

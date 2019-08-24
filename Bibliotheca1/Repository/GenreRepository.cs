@@ -42,15 +42,10 @@ namespace Bibliotheca1.Repository
             return genre;
         }
 
-        public List<bibliotheca.Model.Genre> getGenre()
+        public List<GenreSearch_Result> getGenre(string searchFilter)
         {
-            var data = (from Genre in context.Genres
-                        select new bibliotheca.Model.Genre
-                        {
-                            genreId = Genre.GenreID,
-                            genre = Genre.Genre1
-                        }).ToList<bibliotheca.Model.Genre>();
-            return data;
+            var data = context.GenreSearch(searchFilter);
+            return data.ToList();
         }
     }
 }

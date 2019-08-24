@@ -43,16 +43,10 @@ namespace Bibliotheca.Repository
             return author;
         }
 
-        public List<bibliotheca.Model.Author> getAuthor()
+        public List<AuhtorSearch_Result> getAuthor(string searchFilter)
         {
-            var data = (from Author in context.Authors
-                        select new bibliotheca.Model.Author
-                        {
-                            authorId = Author.AuthorId,
-                            firstName = Author.FirstName,
-                            lastName = Author.LastName
-                        }).ToList<bibliotheca.Model.Author>();
-            return data;
+            var data = context.AuhtorSearch(searchFilter);
+            return data.ToList();
         }
     }
 }

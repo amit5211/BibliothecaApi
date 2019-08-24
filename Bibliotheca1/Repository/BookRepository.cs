@@ -66,16 +66,16 @@ namespace bibliotheca.Repository
                         }
                        
                         //BookPublisher Table
-                        if(book.publisher != null)
-                        {
-                            foreach (var item in book.publisher)
-                            {
-                                entityBookPublisher.BookId = book.bookId;
-                                entityBookPublisher.BookPublisherId = item.id;
-                                context.BookPublishers.Add(entityBookPublisher);
-                                context.SaveChanges();
-                            }
-                        }
+                        //if(book.publisher != null)
+                        //{
+                        //    foreach (var item in book.publisher)
+                        //    {
+                        //        entityBookPublisher.BookId = book.bookId;
+                        //        entityBookPublisher.BookPublisherId = item.id;
+                        //        context.BookPublishers.Add(entityBookPublisher);
+                        //        context.SaveChanges();
+                        //    }
+                        //}
                         
                         transaction.Commit();
                     }
@@ -92,6 +92,12 @@ namespace bibliotheca.Repository
                 }
             }
             return book;
+        } 
+
+        public List<ProcSelectAllBook_Result> getBook()
+        {
+            var data = context.ProcSelectAllBook();
+            return data.ToList();
         }
     }
 }

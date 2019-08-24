@@ -138,6 +138,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="AuhtorSearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="searchFileter" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GenreSearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="searchFileter" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ProcSelectAllBook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="BibliothecaModelStoreContainer">
           <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
@@ -207,6 +214,13 @@
             <End Role="Publisher" EntitySet="Publishers" />
             <End Role="BookPublisher" EntitySet="BookPublishers" />
           </AssociationSet>
+          <FunctionImport Name="AuhtorSearch" ReturnType="Collection(BibliothecaModel.AuhtorSearch_Result)">
+            <Parameter Name="searchFileter" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GenreSearch" ReturnType="Collection(BibliothecaModel.GenreSearch_Result)">
+            <Parameter Name="searchFileter" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ProcSelectAllBook" ReturnType="Collection(BibliothecaModel.ProcSelectAllBook_Result)" />
         </EntityContainer>
         <EntityType Name="Author">
           <Key>
@@ -353,6 +367,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="AuhtorSearch_Result">
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="AuthorId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GenreSearch_Result">
+          <Property Type="String" Name="Genre" Nullable="false" MaxLength="40" />
+          <Property Type="Int32" Name="GenreID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ProcSelectAllBook_Result">
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="BookId" Nullable="false" />
+          <Property Type="String" Name="Author" Nullable="true" />
+          <Property Type="String" Name="GenreName" Nullable="true" />
+          <Property Type="String" Name="Language" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="FirstPublish" Nullable="true" />
+          <Property Type="Int32" Name="Pages" Nullable="true" />
+          <Property Type="Decimal" Name="Price" Nullable="true" Precision="6" Scale="2" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -427,6 +460,37 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AuhtorSearch" FunctionName="BibliothecaModel.Store.AuhtorSearch">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BibliothecaModel.AuhtorSearch_Result">
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GenreSearch" FunctionName="BibliothecaModel.Store.GenreSearch">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BibliothecaModel.GenreSearch_Result">
+                <ScalarProperty Name="Genre" ColumnName="Genre" />
+                <ScalarProperty Name="GenreID" ColumnName="GenreID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProcSelectAllBook" FunctionName="BibliothecaModel.Store.ProcSelectAllBook">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BibliothecaModel.ProcSelectAllBook_Result">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="GenreName" ColumnName="GenreName" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="FirstPublish" ColumnName="FirstPublish" />
+                <ScalarProperty Name="Pages" ColumnName="Pages" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

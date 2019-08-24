@@ -36,10 +36,11 @@ namespace Bibliotheca.Controllers
 
         [HttpGet]
         [Route("GetAuthor")]
-        public List<Author> GetAuthor()
+        public ResponseObj GetAuthor(string searchFilter)
         {
-            var result = authorRepository.getAuthor();
-            return result;
+            var result = authorRepository.getAuthor(searchFilter);
+            responseObj.data = result;
+            return responseObj;
         }
     }
 }
